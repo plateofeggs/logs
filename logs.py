@@ -17,3 +17,15 @@ def process_query(user_query):
     cursor.execute(user_query)
     return cursor.fetchall()
     database_object.close()
+
+# What are the most popular three articles of all time?
+def top_three_articles_alltime():
+    pass
+
+# Who are the most popular article authors of all time?
+def top_authors_alltime():
+    pass
+
+# On which days did more than 1% of requests lead to errors?
+def error_prone_days():
+    pass
