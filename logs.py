@@ -10,9 +10,10 @@ import psycopg2
 
 DBNAME = 'news'
 
-# A function to connect to the database
-def connect_to_database():
-    """ Connect to the database specified in the DBNAME constant """
+def process_query(user_query):
+    """ Take a query as input and return the result of that query """
     database_object = psycopg2.connect(dbname=DBNAME)
     cursor = database_object.cursor()
-    return cursor
+    cursor.execute(user_query)
+    return cursor.fetchall()
+    database_object.close()
