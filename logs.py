@@ -20,18 +20,20 @@ def process_query(user_query):
 
 def top_three_articles_alltime():
     """ Print the three most popular articles of all time """
-    top_three = process_query(("select count(path), articles.slug "
-                               "from log join articles "
-                               "on log.path = '/article/' || articles.slug "
-                               "group by articles.slug "
-                               "order by count(path) desc limit 3"))
+    top_three = process_query(("select count(path) as views, path "
+                               "from log "
+                               "where status = '200 OK' "
+                               "and not path = '/' "
+                               "group by path "
+                               "order by views desc "
+                               "limit 3"))
     rank = 1
     print("\n\t\tTOP 3 ARTICLES\n")
     print("Rank\t|\tViews\t|\tArticle Name")
     print("-------------------------------------------------------")
 
     for article in top_three:
-        print(str(rank) + "\t\t" + str(article[0]) + "\t\t" + article[1])
+        print(str(rank) + "\t\t" + str(article[0]) + "\t\t" + article[1][9:])
         rank += 1
 
 
