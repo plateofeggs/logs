@@ -39,10 +39,28 @@ def top_three_articles_alltime():
 
 # Who are the most popular article authors of all time?
 def top_authors_alltime():
-    pass
+    top_authors = process_query(("select auth.name, sum(log.views) "
+                                 "from (select authors.name, articles.slug "
+                                       "from articles join authors "
+                                       "on authors.id = articles.author) auth "
+                                       "join "
+                                       "(select count(log.path) as views, "
+                                               "log.path "
+                                        "from log where status = '200 OK' "
+                                        "and not path = '/' "
+                                        "group by path) log "
+                                        "on log.path = '/article/' || auth.slug "
+                                        "group by auth.name "
+                                        "order by sum(log.views) desc limit 3"))
+
+    print("\n\t\tTOP 3 AUTHORS\n")
+
+    for author in top_authors:
+        print(author[0] + "\t - \t" + str(author[1]))
 
 # On which days did more than 1% of requests lead to errors?
 def error_prone_days():
     pass
 
 top_three_articles_alltime()
+top_authors_alltime()
