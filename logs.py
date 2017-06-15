@@ -60,7 +60,15 @@ def top_authors_alltime():
 
 # On which days did more than 1% of requests lead to errors?
 def error_prone_days():
-    pass
+    high_404_days = process_query("select to_char(good_rqst.day, 'Month dd, YYYY'), trunc((bad_rqst.total::numeric * 100 / good_rqst.total), 1) as percent_error from good_rqst join bad_rqst on good_rqst.day = bad_rqst.day where (bad_rqst.total::numeric * 100 / good_rqst.total) > 1")
+
+    print("\n\t\tDAYS WITH GREATER THAN 1% 404 REQUESTS\n")
+
+    for day in high_404_days:
+        print(day[0] + "\t - \t " + str(day[1]))
+
+
 
 top_three_articles_alltime()
 top_authors_alltime()
+error_prone_days()
