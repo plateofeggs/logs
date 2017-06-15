@@ -42,9 +42,9 @@ def top_authors_alltime():
                                         "group by path) log "
                                         "on log.path = '/article/' || auth.slug "
                                         "group by auth.name "
-                                        "order by sum(log.views) desc limit 3"))
+                                        "order by sum(log.views) desc"))
 
-    print("\n\t\tTOP 3 AUTHORS\n")
+    print("\n\t\tTOP AUTHORS\n")
 
     for author in top_authors:
         print(author[0] + "\t - \t" + str(author[1]))
