@@ -20,21 +20,12 @@ def process_query(user_query):
 
 def top_three_articles_alltime():
     """ Print the three most popular articles of all time """
-    top_three = process_query(("select count(path) as views, path "
-                               "from log "
-                               "where status = '200 OK' "
-                               "and not path = '/' "
-                               "group by path "
-                               "order by views desc "
-                               "limit 3"))
-    rank = 1
+    top_three = process_query("select title, article_views.views from articles join article_views on article_views.path = '/article/' || articles.slug order by article_views.views desc;")
+
     print("\n\t\tTOP 3 ARTICLES\n")
-    print("Rank\t|\tViews\t|\tArticle Name")
-    print("-------------------------------------------------------")
 
     for article in top_three:
-        print(str(rank) + "\t\t" + str(article[0]) + "\t\t" + article[1][9:])
-        rank += 1
+        print(article[0] + "\t - \t" + str(article[1]))
 
 
 # Who are the most popular article authors of all time?
