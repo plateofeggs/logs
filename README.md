@@ -2,35 +2,70 @@
 
 ## SETTING UP THE ENVIRONMENT
 
-This project is dependent upon the materials provided for Udacity's Logs
-Analysis project. 
+This code is dependent upon the materials provided for Udacity's Logs
+Analysis project. For ease of access this repository provides the vagrantfile
+and two SQL scripts to set up the environment as intended for this project.  
 
-1. Instructions for setting up this environment can be located [here](https://classroom.udacity.com/nanodegrees/nd004/parts/8d3e23e1-9ab6-47eb-b4f3-d5dc7ef27bf0/modules/bc51d967-cb21-46f4-90ea-caf73439dc59/lessons/5475ecd6-cfdb-4418-85a2-f2583074c08d/concepts/14c72fe3-e3fe-4959-9c4b-467cf5b7c3a0)
+Follow these steps to get started:
 
-2. Additionally, you will need to download the PostgreSQL database [here](https://classroom.udacity.com/nanodegrees/nd004/parts/8d3e23e1-9ab6-47eb-b4f3-d5dc7ef27bf0/modules/bc51d967-cb21-46f4-90ea-caf73439dc59/lessons/262a84d7-86dc-487d-98f9-648aa7ca5a0f/concepts/a9cf98c8-0325-4c68-b972-58d5957f1a91)
-and follow the subsequent instructions
+1. Download [Vagrant](https://www.vagrantup.com/) and install.
+2. Download [Virtual Box](https://www.virtualbox.org/) and install. *You **do not** need to run this after installing*.
+3. Clone this repository to a directory of your choice.
 
-3. Clone this project into the shared /vagrant directory and cd in to it
+   Now that you have everything in place, it's time to set up your virtual environment.
+   
+4. `cd` into `logs` (or whatever you happened to name it):
+   ```sh
+   $ cd logs
+   ```
 
-4. If you have not already:
-```sh
-$ vagrant up
-$ vagrant ssh
-````
+5. Now let Vagrant do the hard work (this may take a few minutes to complete, be patient):
+   ```sh
+   $ vagrant up
+   ```
+   Once `vagrant up` has finished, you will be greeted with your shell prompt again.
 
-5. From the virtual machine prompt (substitue '/logs' with your custom directory name if needed):
+6. Log in to the virtual machine:
+   ```sh
+   $ vagrant ssh
+   ```
+   
+   If you are alerted that a restart is required above the virtual machine's prompt upon login, you can simply:
+   ```sh
+   $ vagrant halt
+   ```
+   Then
+   ```sh
+   $ vagrant up
+   $ vagrant ssh
+   ```
+   
+7. Once logged in, navigate to the shared directory:
+   ```sh
+   cd /vagrant
+   ```
+
+8. Extract the newsdata SQL script and use it to populate the database with test data:
+   ```sh
+   $ unzip newsdata.zip
+   $ psql -d news -f newsdata.sql
+   ```
+
+9. Set up the views needed to query the database:
+   ```sh
+   $ psql -d news -f createviews.sql
+   ```
+9. Lastly, run logs.py:
+   ```sh
+   $ python3 logs.py
+   ```
+
+## VIEWS USED
+
+This program utilizes views in PostgreSQL. The queries that make up these views are described below.
+
+#### article_views
 ````sh
-$ cd /vagrant/logs
-````
-
-## CREATING THE VIEWS
-
-This program utilizes views in PostgreSQL. To set these up, do the following:
-
-````sh
-/vagrant/logs$ psql -d news
-
-news=> CREATE VIEW article_views AS 
  SELECT count(log.path) AS views,
     log.path
    FROM log
@@ -39,8 +74,9 @@ news=> CREATE VIEW article_views AS
   ORDER BY (count(log.path)) DESC
  LIMIT 3;
  ````
+ 
+ #### bad_rqst
  ````sh
-news=> CREATE VIEW bad_rqst AS 
  SELECT date(log."time") AS day,
    count(log.id) AS total
   FROM log
@@ -48,16 +84,18 @@ news=> CREATE VIEW bad_rqst AS
   GROUP BY (date(log."time"))
   ORDER BY (date(log."time"));
 ````
+
+#### good_rqst
 ````sh
-news=> CREATE VIEW good_rqst AS 
  SELECT date(log."time") AS day,
     count(log.id) AS total
    FROM log
   GROUP BY (date(log."time"))
   ORDER BY (date(log."time"));
 ````
+
+#### high_404_days
 ````sh
-news=> CREATE VIEW high_404_days AS
  SELECT to_char(good_rqst.day::timestamp with time zone, 'Month dd, YYYY'::text) AS to_char,
     trunc(bad_rqst.total::numeric * 100::numeric / good_rqst.total::numeric, 1) AS trunc
    FROM good_rqst
@@ -78,4 +116,4 @@ connect to the website's database for analysis.
 
 The goal was to answer these questions in a way that utilizes only single queries to the
 PostgreSQL database instead of relying on Python to do the heavy lifting. It also
-displays that information in human readable format
+displays that information in human readable format.
