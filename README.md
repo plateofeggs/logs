@@ -3,7 +3,7 @@
 ## SETTING UP THE ENVIRONMENT
 
 This code is dependent upon the materials provided for Udacity's Logs
-Analysis project. For ease of access this repository provides the vagrantfile
+Analysis project. For ease of access this repository provides a vagrantfile
 and two SQL scripts to set up the environment as intended for this project.  
 
 Follow these steps to get started:
@@ -59,6 +59,8 @@ Follow these steps to get started:
    ```sh
    $ python3 logs.py
    ```
+## EXPECTED OUTPUT
+Make sure this gets done!
 
 ## VIEWS USED
 
