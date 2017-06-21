@@ -33,8 +33,8 @@ def top_three_articles_alltime():
         print(article[0] + "\t    -\t    " + str(article[1]))
 
 
-# Who are the most popular article authors of all time?
 def top_authors_alltime():
+    """ Print the top authors of all time """
     top_authors = process_query(("select auth.name, sum(log.views) "
                                  "from (select authors.name, articles.slug "
                                  "from articles join authors "
@@ -55,8 +55,8 @@ def top_authors_alltime():
         print(author[0] + "\t    -\t    " + str(author[1]))
 
 
-# On which days did more than 1% of requests lead to errors?
 def error_prone_days():
+    """ Print the days in which there were more than 1% bad requests """
     high_404_days = process_query("select * from high_404_days")
 
     print("\n    \t    \t    DAYS WITH GREATER THAN 1% 404 REQUESTS\n    ")
