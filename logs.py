@@ -15,8 +15,9 @@ def process_query(user_query):
     database_object = psycopg2.connect(dbname=DBNAME)
     cursor = database_object.cursor()
     cursor.execute(user_query)
+    results = cursor.fetchall()
     database_object.close()
-    return cursor.fetchall()
+    return results
 
 
 def top_three_articles_alltime():
