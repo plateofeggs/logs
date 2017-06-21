@@ -30,8 +30,8 @@ def top_three_articles_alltime():
 
     print("\n    \t    \t    TOP 3 ARTICLES\n    ")
 
-    for article in top_three:
-        print(article[0] + "\t    -\t    " + str(article[1]))
+    for title, views in top_three:
+        print(title + "\t    -\t    " + str(views))
 
 
 def top_authors_alltime():
