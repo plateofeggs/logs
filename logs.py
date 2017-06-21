@@ -62,8 +62,8 @@ def error_prone_days():
 
     print("\n    \t    \t    DAYS WITH GREATER THAN 1% 404 REQUESTS\n    ")
 
-    for day in high_404_days:
-        print(day[0] + "\t    -\t    " + str(day[1]))
+    for day, percentage in high_404_days:
+        print(day + "\t    -\t    " + str(percentage))
 
 
 top_three_articles_alltime()
