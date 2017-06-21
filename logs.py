@@ -31,7 +31,7 @@ def top_three_articles_alltime():
     print("\n    \t    \t    TOP 3 ARTICLES\n    ")
 
     for title, views in top_three:
-        print(title + "\t    -\t    " + str(views))
+        print("{}\t-\t{} views".format(title, views))
 
 
 def top_authors_alltime():
