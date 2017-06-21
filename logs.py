@@ -52,8 +52,8 @@ def top_authors_alltime():
 
     print("\n    \t    \t    TOP AUTHORS\n    ")
 
-    for author in top_authors:
-        print(author[0] + "\t    -\t    " + str(author[1]))
+    for name, views in top_authors:
+        print(name + "\t    -\t    " + str(views))
 
 
 def error_prone_days():
