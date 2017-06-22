@@ -53,7 +53,7 @@ def top_authors_alltime():
     print("\n    \t    \t    TOP AUTHORS\n    ")
 
     for name, views in top_authors:
-        print("{}\t-\t{}".format(name, views))
+        print("{} -- {} views".format(name, views))
 
 
 def error_prone_days():
