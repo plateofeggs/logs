@@ -66,6 +66,7 @@ def error_prone_days():
         print(day + "\t    -\t    " + str(percentage))
 
 
-top_three_articles_alltime()
-top_authors_alltime()
-error_prone_days()
+if __name__ == '__main__':
+    top_three_articles_alltime()
+    top_authors_alltime()
+    error_prone_days()
