@@ -42,11 +42,7 @@ def top_authors_alltime():
                                  "from articles join authors "
                                  "on authors.id = articles.author) auth "
                                  "join "
-                                 "(select count(log.path) as views, "
-                                 "log.path "
-                                 "from log where status = '200 OK' "
-                                 "and not path = '/' "
-                                 "group by path) log "
+                                 "(select * from article_views) log "
                                  "on log.path = '/article/' || auth.slug "
                                  "group by auth.name "
                                  "order by sum(log.views) desc"))
