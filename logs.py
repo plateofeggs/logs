@@ -20,6 +20,7 @@ def process_query(user_query):
     return results
 
 def print_heading(heading):
+    """ Print a heading prior to data output explaining what the data represents """
     print("\n    \t    \t    "+ heading + " \n    ")
 
 def top_three_articles_alltime():
