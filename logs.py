@@ -63,7 +63,7 @@ def error_prone_days():
     print("\n    \t    \t    DAYS WITH GREATER THAN 1% 404 REQUESTS\n    ")
 
     for day, percentage in high_404_days:
-        print(" {0:%B %d, %Y} - {1:.2f} % errors".format(day, percentage))
+        print(" {0:%B %d, %Y} -- {1:.2f} % errors".format(day, percentage))
 
 
 if __name__ == '__main__':
