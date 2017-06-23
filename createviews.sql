@@ -4,8 +4,7 @@ CREATE VIEW article_views AS
    FROM log
   WHERE log.status = '200 OK'::text AND NOT log.path = '/'::text
   GROUP BY log.path
-  ORDER BY (count(log.path)) DESC
- LIMIT 3;
+  ORDER BY (count(log.path)) DESC;
  
  CREATE VIEW bad_rqst AS 
 SELECT date(log.time) AS day,

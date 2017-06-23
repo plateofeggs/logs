@@ -26,7 +26,8 @@ def top_three_articles_alltime():
                                "from articles join article_views "
                                "on article_views.path = '/article/' "
                                "|| articles.slug "
-                               "order by article_views.views desc"))
+                               "order by article_views.views desc "
+                               "limit 3"))
 
     print("\n    \t    \t    TOP 3 ARTICLES\n    ")
 
