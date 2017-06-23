@@ -19,9 +19,11 @@ def process_query(user_query):
     database_object.close()
     return results
 
+
 def print_heading(heading):
-    """ Print a heading prior to data output explaining what the data represents """
-    print("\n    \t    \t    "+ heading + " \n    ")
+    """ Print a heading prior to data output """
+    print("\n\t\t" + heading + "\n")
+
 
 def top_three_articles_alltime():
     """ Print the three most popular articles of all time """
