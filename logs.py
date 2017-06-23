@@ -37,16 +37,7 @@ def top_three_articles_alltime():
 
 def top_authors_alltime():
     """ Print the top authors of all time """
-    top_authors = process_query(("select auth.name, sum(log.views) "
-                                 "from (select authors.name, articles.slug "
-                                 "from articles join authors "
-                                 "on authors.id = articles.author) auth "
-                                 "join "
-                                 "(select * from article_views) log "
-                                 "on log.path = '/article/' || auth.slug "
-                                 "group by auth.name "
-                                 "order by sum(log.views) desc"))
-
+    top_authors = process_query(("select * from top_authors"))
     print("\n    \t    \t    TOP AUTHORS\n    ")
 
     for name, views in top_authors:

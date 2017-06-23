@@ -27,3 +27,17 @@ SELECT date(log.time) AS day,
    FROM good_rqst
      JOIN bad_rqst ON good_rqst.day = bad_rqst.day
   WHERE (bad_rqst.total::numeric * 100::numeric / good_rqst.total::numeric) > 1::numeric;
+
+ CREATE VIEW top_authors AS
+  SELECT auth.name,
+    sum(log.views) AS sum
+   FROM ( SELECT authors.name,
+            articles.slug
+           FROM articles
+             JOIN authors ON authors.id = articles.author) auth
+     JOIN ( SELECT article_views.views,
+            article_views.path
+           FROM article_views) log ON log.path = ('/article/'::text || auth.slug)
+   GROUP BY auth.name
+   ORDER BY (sum(log.views)) DESC;
+
