@@ -19,31 +19,31 @@ def process_query(user_query):
     database_object.close()
     return results
 
+def print_heading(heading):
+    print("\n    \t    \t    "+ heading + " \n    ")
 
 def top_three_articles_alltime():
     """ Print the three most popular articles of all time """
     top_three = process_query(("select * from top_three_articles"))
-
-    print("\n    \t    \t    TOP 3 ARTICLES\n    ")
+    print_heading("TOP 3 ARTICLES OF ALL TIME")
 
     for title, views in top_three:
-        print("\"{}\" -- {} views".format(title, views))
+        print(" \"{}\" -- {} views".format(title, views))
 
 
 def top_authors_alltime():
     """ Print the top authors of all time """
     top_authors = process_query(("select * from top_authors"))
-    print("\n    \t    \t    TOP AUTHORS\n    ")
+    print_heading("TOP AUTHORS OF ALL TIME")
 
     for name, views in top_authors:
-        print("{} -- {} views".format(name, views))
+        print(" {} -- {} views".format(name, views))
 
 
 def error_prone_days():
     """ Print the days in which there were more than 1% bad requests """
     high_404_days = process_query("select * from high_404_days")
-
-    print("\n    \t    \t    DAYS WITH GREATER THAN 1% 404 REQUESTS\n    ")
+    print_heading("DAYS WITH GREATER THAN 1% 404 REQUESTS")
 
     for day, percentage in high_404_days:
         print(" {0:%B %d, %Y} -- {1:.2f} % errors".format(day, percentage))
