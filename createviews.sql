@@ -21,13 +21,6 @@ SELECT date(log.time) AS day,
   GROUP BY (date(log.time))
   ORDER BY (date(log.time));
  
- CREATE VIEW high_404_days AS
- SELECT good_rqst.day AS day,
-    bad_rqst.total::numeric * 100::numeric / good_rqst.total::numeric AS percentage
-   FROM good_rqst
-     JOIN bad_rqst ON good_rqst.day = bad_rqst.day
-  WHERE (bad_rqst.total::numeric * 100::numeric / good_rqst.total::numeric) > 1::numeric;
-
  CREATE VIEW top_articles AS
  SELECT articles.title,
     article_views.views
@@ -48,3 +41,9 @@ SELECT date(log.time) AS day,
    GROUP BY auth.name
    ORDER BY (sum(log.views)) DESC;
 
+ CREATE VIEW high_404_days AS
+ SELECT good_rqst.day AS day,
+    bad_rqst.total::numeric * 100::numeric / good_rqst.total::numeric AS percentage
+   FROM good_rqst
+     JOIN bad_rqst ON good_rqst.day = bad_rqst.day
+  WHERE (bad_rqst.total::numeric * 100::numeric / good_rqst.total::numeric) > 1::numeric;

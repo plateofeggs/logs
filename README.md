@@ -115,15 +115,6 @@ This program utilizes views in PostgreSQL. The queries that make up these views 
   ORDER BY (date(log."time"));
 ````
 
-#### high_404_days
-````sh
- SELECT to_char(good_rqst.day::timestamp with time zone, 'Month dd, YYYY'::text) AS to_char,
-    trunc(bad_rqst.total::numeric * 100::numeric / good_rqst.total::numeric, 1) AS trunc
-   FROM good_rqst
-     JOIN bad_rqst ON good_rqst.day = bad_rqst.day
-  WHERE (bad_rqst.total::numeric * 100::numeric / good_rqst.total::numeric) > 1::numeric;
-````
-
 #### top_articles
 ````sh
  SELECT articles.title,
@@ -146,6 +137,15 @@ This program utilizes views in PostgreSQL. The queries that make up these views 
            FROM article_views) log ON log.path = ('/article/'::text || auth.slug)
    GROUP BY auth.name
    ORDER BY (sum(log.views)) DESC;
+````
+
+#### high_404_days
+````sh
+ SELECT to_char(good_rqst.day::timestamp with time zone, 'Month dd, YYYY'::text) AS to_char,
+    trunc(bad_rqst.total::numeric * 100::numeric / good_rqst.total::numeric, 1) AS trunc
+   FROM good_rqst
+     JOIN bad_rqst ON good_rqst.day = bad_rqst.day
+  WHERE (bad_rqst.total::numeric * 100::numeric / good_rqst.total::numeric) > 1::numeric;
 ````
 
 ## PURPOSE OF THIS PROJECT
