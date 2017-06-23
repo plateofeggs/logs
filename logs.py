@@ -22,12 +22,7 @@ def process_query(user_query):
 
 def top_three_articles_alltime():
     """ Print the three most popular articles of all time """
-    top_three = process_query(("select title, article_views.views "
-                               "from articles join article_views "
-                               "on article_views.path = '/article/' "
-                               "|| articles.slug "
-                               "order by article_views.views desc "
-                               "limit 3"))
+    top_three = process_query(("select * from top_three_articles"))
 
     print("\n    \t    \t    TOP 3 ARTICLES\n    ")
 
