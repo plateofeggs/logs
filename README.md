@@ -59,8 +59,27 @@ Follow these steps to get started:
    ```sh
    $ python3 logs.py
    ```
+
 ## EXPECTED OUTPUT
-Make sure this gets done!
+````
+
+                TOP 3 ARTICLES OF ALL TIME
+
+ "Candidate is jerk, alleges rival" -- 338647 views
+ "Bears love berries, alleges bear" -- 253801 views
+ "Bad things gone, say good people" -- 170098 views
+
+                TOP AUTHORS OF ALL TIME
+
+ Ursula La Multa -- 507594 views
+ Rudolf von Treppenwitz -- 423457 views
+ Anonymous Contributor -- 170098 views
+ Markoff Chaney -- 84557 views
+
+                DAYS WITH GREATER THAN 1% 404 REQUESTS
+
+ July 17, 2016 -- 2.26 % errors
+````
 
 ## VIEWS USED
 
@@ -103,6 +122,30 @@ This program utilizes views in PostgreSQL. The queries that make up these views 
    FROM good_rqst
      JOIN bad_rqst ON good_rqst.day = bad_rqst.day
   WHERE (bad_rqst.total::numeric * 100::numeric / good_rqst.total::numeric) > 1::numeric;
+````
+
+#### top_articles
+````sh
+ SELECT articles.title,
+    article_views.views
+   FROM articles
+     JOIN article_views ON article_views.path = ('/article/'::text || articles.slug)
+  ORDER BY article_views.views DESC;
+````
+
+#### top_authors
+````sh
+ SELECT auth.name,
+    sum(log.views) AS sum
+   FROM ( SELECT authors.name,
+            articles.slug
+           FROM articles
+             JOIN authors ON authors.id = articles.author) auth
+     JOIN ( SELECT article_views.views,
+            article_views.path
+           FROM article_views) log ON log.path = ('/article/'::text || auth.slug)
+   GROUP BY auth.name
+   ORDER BY (sum(log.views)) DESC;
 ````
 
 ## PURPOSE OF THIS PROJECT
