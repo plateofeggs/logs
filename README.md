@@ -86,7 +86,7 @@ Follow these steps to get started:
 This program utilizes views in PostgreSQL. The queries that make up these views are described below.
 
 #### article_views
-````sh
+````sql
  SELECT count(log.path) AS views,
     log.path
    FROM log
@@ -97,7 +97,7 @@ This program utilizes views in PostgreSQL. The queries that make up these views 
  ````
  
  #### bad_rqst
- ````sh
+ ````sql
  SELECT date(log."time") AS day,
    count(log.id) AS total
   FROM log
@@ -107,7 +107,7 @@ This program utilizes views in PostgreSQL. The queries that make up these views 
 ````
 
 #### good_rqst
-````sh
+````sql
  SELECT date(log."time") AS day,
     count(log.id) AS total
    FROM log
@@ -116,7 +116,7 @@ This program utilizes views in PostgreSQL. The queries that make up these views 
 ````
 
 #### top_articles
-````sh
+````sql
  SELECT articles.title,
     article_views.views
    FROM articles
@@ -125,7 +125,7 @@ This program utilizes views in PostgreSQL. The queries that make up these views 
 ````
 
 #### top_authors
-````sh
+````sql
  SELECT auth.name,
     sum(log.views) AS sum
    FROM ( SELECT authors.name,
@@ -140,7 +140,7 @@ This program utilizes views in PostgreSQL. The queries that make up these views 
 ````
 
 #### high_404_days
-````sh
+````sql
  SELECT to_char(good_rqst.day::timestamp with time zone, 'Month dd, YYYY'::text) AS to_char,
     trunc(bad_rqst.total::numeric * 100::numeric / good_rqst.total::numeric, 1) AS trunc
    FROM good_rqst
