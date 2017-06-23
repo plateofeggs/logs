@@ -27,7 +27,7 @@ def print_heading(heading):
 
 def top_three_articles_alltime():
     """ Print the three most popular articles of all time """
-    top_three = process_query(("select * from top_three_articles"))
+    top_three = process_query(("select * from top_articles limit 3"))
     print_heading("TOP 3 ARTICLES OF ALL TIME")
 
     for title, views in top_three:
