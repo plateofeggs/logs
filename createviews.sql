@@ -8,29 +8,23 @@ CREATE VIEW article_views AS
  LIMIT 3;
  
  CREATE VIEW bad_rqst AS 
-SELECT date(log."time") AS day,
+SELECT date(log.time) AS day,
   count(log.id) AS total
  FROM log
  WHERE log.status = '404 NOT FOUND'::text
- GROUP BY (date(log."time"))
- ORDER BY (date(log."time"));
+ GROUP BY (date(log.time))
+ ORDER BY (date(log.time));
  
  CREATE VIEW good_rqst AS 
- SELECT date(log."time") AS day,
+ SELECT date(log.time) AS day,
     count(log.id) AS total
    FROM log
-  GROUP BY (date(log."time"))
-  ORDER BY (date(log."time"));
+  GROUP BY (date(log.time))
+  ORDER BY (date(log.time));
  
  CREATE VIEW high_404_days AS
- SELECT to_char(good_rqst.day::timestamp with time zone, 'Month dd, YYYY'::text) AS to_char,
-    trunc(bad_rqst.total::numeric * 100::numeric / good_rqst.total::numeric, 1) AS trunc
+ SELECT good_rqst.day AS day,
+    bad_rqst.total::numeric * 100::numeric / good_rqst.total::numeric AS percentage
    FROM good_rqst
      JOIN bad_rqst ON good_rqst.day = bad_rqst.day
   WHERE (bad_rqst.total::numeric * 100::numeric / good_rqst.total::numeric) > 1::numeric;
-
-
-
-
- 
- 
